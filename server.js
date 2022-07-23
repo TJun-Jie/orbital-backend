@@ -26,8 +26,13 @@ mongoose
     process.exit();
   });
 
-app.listen(8000, () => {
-  console.log('listening on 8000');
+app.listen(process.env.PORT || 8000, () => {
+    if(process.env.PORT){
+          console.log('listening on heroku port');
+
+    } else {
+      console.log('listening on 8000');
+    }
 });
 
 app.get('/', (req, res) => {
