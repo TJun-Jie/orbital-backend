@@ -3,13 +3,14 @@ const bodyParser = require('body-parser');
 const app = express();
 const { databaseSource } = require('./config');
 const cors = require('cors');
+const dotenv = require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //can also use origin to specify domains
 app.use(cors());
 //enable pre-flight across the board
-app.options('*', cors());
+// app.options('*', cors());
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -26,13 +27,8 @@ mongoose
     process.exit();
   });
 
-app.listen(process.env.PORT || 8000, () => {
-    if(process.env.PORT){
-          console.log('listening on heroku port');
-
-    } else {
-      console.log('listening on 8000');
-    }
+app.listen(8000, () => {
+  console.log('listening on 8000');
 });
 
 app.get('/', (req, res) => {
