@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const { databaseSource } = require('./config');
 const cors = require('cors');
+const dotenv = require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,14 +27,29 @@ mongoose
     process.exit();
   });
 
-app.listen(process.env.PORT || 8000, () => {
-    if(process.env.PORT){
-          console.log('listening on heroku port');
 
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    // handle OPTIONS method
+    if ('OPTIONS' == req.method) {
+        return res.sendStatus(200);
     } else {
-      console.log('listening on 8000');
+        next();
     }
 });
+
+
+app.listen(process.env.PORT || 8000, () => {
+     if(process.env.PORT){
+           console.log('listening on heroku port');
+
+     } else {
+       console.log('listening on 8000');
+     }
+ });
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello Crud Node Express' });
