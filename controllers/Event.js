@@ -51,9 +51,11 @@ exports.deleteAll = async (req, res) => {
                 $gte: today,
             }});
         res.status(200).json('success');
+        return;
         }
     } catch(error) {
         res.status(404).json({ message: error.message });
+        return;
     }
 }
 
