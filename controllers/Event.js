@@ -45,19 +45,19 @@ exports.findAll = async (req, res) => {
 exports.deleteAll = async (req, res) => {
     try{
         for(var i = 0 ; i < 3; i++){
+        console.log('hi')
         const today = new Date(Date.now());
         today.setHours(0,0,0,0);
             const test = await EventModel.deleteMany({start: {
                 $gte: today,
             }});
-      res.send({
-        message: 'events deleted',
-        event: data,
-      });
+        res.send({
+          message: 'Meal deleted successfully!',
+        });
 
         }
     } catch(error) {
-    console.log('eorr')
+        res.status(404).json({ message: error.message });
     }
 }
 
