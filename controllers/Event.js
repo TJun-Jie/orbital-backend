@@ -50,7 +50,10 @@ exports.deleteAll = async (req, res) => {
             const test = await EventModel.deleteMany({start: {
                 $gte: today,
             }});
-                console.log(test)
+      res.send({
+        message: 'events deleted',
+        event: data,
+      });
 
         }
     } catch(error) {
